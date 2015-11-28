@@ -20,7 +20,7 @@ class Album(models.Model):
 
     def images(self):
         lst = [x.image.name for x in self.image_set.all()]
-        lst = ["<a href='/media/%s'>%s</a>" % (x, x.split('/')[-1]) for x in lst]
+        lst = ["<a href='{{ MEDIA_URL }}/%s'>%s</a>" % (x, x.split('/')[-1]) for x in lst]
         return join(lst, ', ')
     images.allow_tags = True
 
@@ -66,7 +66,7 @@ class Image(models.Model):
         return str(join(lst, ', '))
 
     def thumbnail(self):
-        return """<a href="/media/%s"><img border="0" alt="" src="/media/%s" height="40" /></a>""" % (
+        return """<a href="{{ MEDIA_URL }}images/%s"><img alt="" src="{{ MEDIA_URL }}images/%s" /></a>""" % (
                                                                     (self.image.name, self.image.name))
     thumbnail.allow_tags = True
 
