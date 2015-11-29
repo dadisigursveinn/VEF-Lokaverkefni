@@ -1,13 +1,23 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render_to_response
 
-from .forms import PhotoForm
+from .forms import UploadFileForm
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = UploadFileForm()
+    return render_to_response('upload.html', {'form': form})
+
 def list(request):
     title = "My Title"
+
 	form = PhotoForm(request.POST or None)
+    
 	context = {
 		"title": title,
 		"form": form

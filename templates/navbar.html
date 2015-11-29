@@ -1,6 +1,6 @@
     <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -8,20 +8,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Photographs</a>
+          <a class="navbar-brand" href="/">DSH</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-              </ul>
-            </li>
+            <li><a href="/albums/">Albums</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
                 <p class="navbar-text">Signed in as {{ user.get_username }}</p> 
-                <li class=""><a href="#">Upload</a></li>
+                <li class=""><a href="/admin/photo/image/add/">Upload</a></li>
                 <li class=""><a class="navbar-link" href="/logout/" style="color: #ce0c0c">Log out</a></li>
             {% else %}
-                <li><a href="login/">Log in</a></li>
+                <li><a href="/login/">Log in</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->

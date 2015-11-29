@@ -23,13 +23,15 @@ urlpatterns = [
     #url(r'^$', 'myphotos.views.list', name='list'),
     #url(r'^photos/',include('.photos.urls')),
     #url(r'^$', RedirectView.as_view(url='/photos/list/', permanent=True)),
-	url(r'^$', 'homepage.views.home', name='home'),
+	url(r'^$', 'homepage.views.home', name='main'),
+    url(r'^index/$', 'homepage.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^', include('index.urls')),
     url(r'^login/$', 'index.views.Login', name='Login'),
     url(r'^logout/$', 'index.views.Logout', name='Logout'),
     url(r'^home/$', 'index.views.Home', name='Home'),
     url(r'^blog/$', 'index.views.Blog', name='Blog'),
+    url(r'^albums/$', 'photo.views.main', name='main'),
 ]
 
 if settings.DEBUG:
