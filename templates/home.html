@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{{ title }}</title>
-</head>
-<body>
-<h1>{{ title }}</h1>
-<form method="POST" action="">{% csrf_token %}
-	{{ form.as_p }}
-	<input type='submit' value="Sign Up" />
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Home | {% endblock %}
+
+{% block jumbotron %}
+<div class="container-fluid">
+
+  <!-- Main component for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <h1>Myndasíða</h1>
+    <p>Vefsíða til þess að geyma ljósmyndir og meta upplýsingar(ISO, aperture, shutter speed og f.l.). Ég nota Django til þess að leysa verkefnið.</p>
+    <p>
+      <a class="btn btn-lg btn-primary" href="https://github.com/dadisigursveinn/VEF-Lokaverkefni/" role="button">Github</a>
+    </p>
+  </div>
+
+</div> <!-- /container -->
+{% endblock %}

@@ -1,32 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404, render_to_response
-from django.contrib.auth.decorators import login_required
-from django.core.context_processors import csrf
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.forms import ModelForm
-from settings import MEDIA_URL
+from .models import Document
+from .forms import DocumentForm
 
-from dbe.photo.models import *
 
-def main(request):
-    """Main listing."""
-    albums = Album.objects.all()
-    if not request.user.is_authenticated():
-        albums = albums.filter(public=True)
+def list(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newdoc = Document(docfile=request.FILES['docfile'])
+            newdoc.save()
 
-    paginator = Paginator(albums, 10)
-    try: page = int(request.GET.get("page", '1'))
-    except ValueError: page = 1
+            # Redirect to the document list after POST
+            return HttpResponseRedirect(reverse('ljosmyndasida.photos.views.list'))
+    else:
+        form = DocumentForm()  # A empty, unbound form
 
-    try:
-        albums = paginator.page(page)
-    except (InvalidPage, EmptyPage):
-        albums = paginator.page(paginator.num_pages)
+    # Load documents for the list page
+    documents = Document.objects.all()
 
-    for album in albums.object_list:
-        album.images = album.image_set.all()[:4]
-
-    return render_to_response("photo/list.html", dict(albums=albums, user=request.user,
-        media_url=MEDIA_URL))
+    # Render list page with the documents and the form
+    return render_to_response(
+        'list.html',
+        {'documents': documents, 'form': form},
+        context_instance=RequestContext(request)
+    )

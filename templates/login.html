@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Login | {% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+<form method="post" action=".?next={{ redirect_to }}" style="margin: 0 auto; width:80%"> {% csrf_token %}
+	<h3>Login</h3>
+    <input type="text" name="username" class="form-control" placeholder="Username"/>
+    <br>
+    <input type="password" name="password" class="form-control" placeholder="Password"/>
+    <br>
+    <input class="btn btn-block btn-primary" type="submit" value="Login"/>
+</form>
+</div>
+{% endblock %}

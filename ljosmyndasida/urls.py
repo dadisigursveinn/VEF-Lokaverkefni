@@ -20,6 +20,18 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    #url(r'^$', 'myphotos.views.list', name='list'),
+    #url(r'^photos/',include('.photos.urls')),
+    #url(r'^$', RedirectView.as_view(url='/photos/list/', permanent=True)),
 	url(r'^$', 'homepage.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    #url(r'^', include('index.urls')),
+    url(r'^login/$', 'index.views.Login', name='Login'),
+    url(r'^logout/$', 'index.views.Logout', name='Logout'),
+    url(r'^home/$', 'index.views.Home', name='Home'),
+    url(r'^blog/$', 'index.views.Blog', name='Blog'),
+]
+
+if settings.DEBUG:
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
